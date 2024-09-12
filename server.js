@@ -6,13 +6,13 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-let userData = {}; // Store user data temporarily
-let totalClicks = 0; // Global variable to track total clicks
-let totalCardClicks = 0; // Global variable to track total clicks
-let totalPayClicks = 0; // Global variable to track total clicks
-let totalReservClicks = 0; // Global variable to track total clicks
+let userData = {}; // Store user data by insta (Instagram handle) as key
+let totalClicks = 0;
+let totalCardClicks = 0;
+let totalPayClicks = 0;
+let totalReservClicks = 0;
 
-// Save the user data to the server
+// Save the user data to the server using insta as the key
 app.post("/api/save", (req, res) => {
   const {
     first,
@@ -25,7 +25,12 @@ app.post("/api/save", (req, res) => {
     insta,
   } = req.body;
 
-  userData = {
+  if (!insta) {
+    return res.status(400).json({ message: "Insta handle is required" });
+  }
+
+  // Save the data associated with the insta handle
+  userData[insta] = {
     first,
     second,
     first_ko,
@@ -39,9 +44,15 @@ app.post("/api/save", (req, res) => {
   res.status(200).json({ message: "Data saved successfully" });
 });
 
-// Retrieve the user data
-app.get("/api/user-data", (req, res) => {
-  res.json(userData);
+// Retrieve user data by insta handle
+app.get("/api/user-data/:insta", (req, res) => {
+  const { insta } = req.params;
+
+  if (!userData[insta]) {
+    return res.status(404).json({ message: "User data not found" });
+  }
+
+  res.json(userData[insta]);
 });
 
 // Endpoint to monitor total clicks

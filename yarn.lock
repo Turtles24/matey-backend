@@ -320,7 +320,7 @@ get-intrinsic@^1.1.3, get-intrinsic@^1.2.4:
 
 gh-pages@6.1.1:
   version "6.1.1"
-  resolved "https://registry.npmjs.org/gh-pages/-/gh-pages-6.1.1.tgz"
+  resolved "https://registry.yarnpkg.com/gh-pages/-/gh-pages-6.1.1.tgz#e80af927a081cb480657fde5a0b87ea2e77d6c74"
   integrity sha512-upnohfjBwN5hBP9w2dPE7HO5JJTHzSGMV1JrLrHvNuqmjoYHg6TBrCcnEoorjG/e0ejbuvnwyKMdTyM40PEByw==
   dependencies:
     async "^3.2.4"
@@ -728,7 +728,7 @@ universalify@^2.0.0:
   resolved "https://registry.npmjs.org/universalify/-/universalify-2.0.1.tgz"
   integrity sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==
 
-unpipe@~1.0.0, unpipe@1.0.0:
+unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/unpipe/-/unpipe-1.0.0.tgz"
   integrity sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==
