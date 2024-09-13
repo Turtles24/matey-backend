@@ -102,6 +102,10 @@ app.get("/api/total-reserv-clicks", (req, res) => {
 // Endpoint to reset userData
 app.post("/api/reset-user-data", (req, res) => {
   userData = {}; // Reset the userData object
+  totalClicks = 0;
+  totalCardClicks = 0;
+  totalPayClicks = 0;
+  totalReservClicks = 0;
   res.status(200).json({ message: "All user data has been reset" });
 });
 
