@@ -48,7 +48,7 @@ app.post("/api/save", (req, res) => {
 app.get("/api/user-data/:insta", (req, res) => {
   const { insta } = req.params;
 
-  if (!userData[insta]) {
+  if (!userData) {
     return res.status(404).json({ message: "User data not found" });
   }
 
@@ -97,6 +97,12 @@ app.get("/api/total-pay-clicks", (req, res) => {
 // Endpoint to get the total number of clicks
 app.get("/api/total-reserv-clicks", (req, res) => {
   res.json({ totalReservClicks });
+});
+
+// Endpoint to reset userData
+app.post("/api/reset-user-data", (req, res) => {
+  userData = {}; // Reset the userData object
+  res.status(200).json({ message: "All user data has been reset" });
 });
 
 app.listen(5001, () => {
