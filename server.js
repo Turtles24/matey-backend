@@ -105,7 +105,7 @@ app.post("/profile/img", async (req, res) => {
 
 // 이미지 파일을 제공하는 API
 app.get("/profile/img/:insta", (req, res) => {
-  const { insta } = req.params;
+  const { insta } = "or_nxt11";
 
   if (!userProfile[insta] || !userProfile[insta].img) {
     return res.status(404).json({ message: "Profile image not found" });

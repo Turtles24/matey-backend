@@ -22,7 +22,7 @@ data = {
     "img": image_url
 }
 
-response = requests.post(api_url, json=image_url)
+response = requests.post(api_url, json=data)  # 올바르게 'data' 객체를 json으로 전송
 
 if response.status_code == 200:
     print("프로필 이미지가 서버에 성공적으로 전송되었습니다.")
