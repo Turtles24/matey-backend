@@ -17,10 +17,12 @@ let totalReservClicks = 0;
 
 // Save the user data to the server using insta as the key
 app.post("/register", (req, res) => {
+  console.log(req.body); // 이 줄 추가
+
   const { insta, password, userName } = req.body;
 
-  if (!insta) {
-    return res.status(400).json({ message: "Insta handle is required" });
+  if (!insta || !userName || !password) {
+    return res.status(400).json({ message: "All fields are required" });
   }
 
   // Save the data associated with the insta handle
