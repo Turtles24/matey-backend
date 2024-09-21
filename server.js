@@ -66,6 +66,17 @@ app.post("/profile/img", (req, res) => {
 });
 
 // Retrieve user data by insta handle
+app.get("/api/profile/:insta", (req, res) => {
+  const { insta } = req.params;
+
+  if (!userProfile) {
+    return res.status(404).json({ message: "User data not found" });
+  }
+
+  res.json(userProfile[insta]);
+});
+
+// Retrieve user data by insta handle
 app.get("/api/user-data/:insta", (req, res) => {
   const { insta } = req.params;
 
