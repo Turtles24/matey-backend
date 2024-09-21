@@ -5,6 +5,7 @@ const cors = require("cors");
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
 let userData = {}; // Store user data by insta (Instagram handle) as key
 let userDataAdded = {}; // Store user data by insta (Instagram handle) as key
