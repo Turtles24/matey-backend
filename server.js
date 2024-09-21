@@ -135,7 +135,7 @@ app.get("/api/user-data/:insta", (req, res) => {
 app.get("/api/user-data-added/:insta", (req, res) => {
   const { insta } = req.params;
 
-  if (!userData) {
+  if (!userDataAdded) {
     return res.status(404).json({ message: "User data not found" });
   }
 
