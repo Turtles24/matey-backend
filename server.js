@@ -7,23 +7,16 @@ app.use(cors());
 app.use(bodyParser.json());
 
 let userData = {}; // Store user data by insta (Instagram handle) as key
+let userDataAdded = {}; // Store user data by insta (Instagram handle) as key
+let userProfile = {}; // Store user data by insta (Instagram handle) as key
 let totalClicks = 0;
 let totalCardClicks = 0;
 let totalPayClicks = 0;
 let totalReservClicks = 0;
 
 // Save the user data to the server using insta as the key
-app.post("/api/save", (req, res) => {
-  const {
-    first,
-    second,
-    first_ko,
-    second_ko,
-    birth,
-    phone_num,
-    bank_id,
-    insta,
-  } = req.body;
+app.post("/register", (req, res) => {
+  const { insta, password } = req.body;
 
   if (!insta) {
     return res.status(400).json({ message: "Insta handle is required" });
@@ -31,17 +24,45 @@ app.post("/api/save", (req, res) => {
 
   // Save the data associated with the insta handle
   userData[insta] = {
-    first,
-    second,
-    first_ko,
-    second_ko,
-    birth,
-    phone_num,
-    bank_id,
     insta,
+    userName,
+    password,
   };
 
   res.status(200).json({ message: "Data saved successfully" });
+});
+
+// Save the user data to the server using insta as the key
+app.post("/register/data", (req, res) => {
+  const { mbti, birth, phone_num, bank_id } = req.body;
+
+  // Save the data associated with the insta handle
+  userDataAdded[userData[insta]] = {
+    mbti,
+    birth,
+    phone_num,
+    bank_id,
+  };
+
+  res.status(200).json({ message: "Data saved successfully" });
+});
+
+// Save the user profile image to the server using insta as the key
+app.post("/profile/img", (req, res) => {
+  const { insta, img } = req.body;
+
+  if (!insta || !img) {
+    return res
+      .status(400)
+      .json({ message: "Insta handle and image URL are required" });
+  }
+
+  // Save the profile image associated with the insta handle
+  userProfile[insta] = {
+    img,
+  };
+
+  res.status(200).json({ message: "Profile image saved successfully" });
 });
 
 // Retrieve user data by insta handle
@@ -53,6 +74,17 @@ app.get("/api/user-data/:insta", (req, res) => {
   }
 
   res.json(userData[insta]);
+});
+
+// Retrieve user data by insta handle
+app.get("/api/user-data-added/:insta", (req, res) => {
+  const { insta } = req.params;
+
+  if (!userData) {
+    return res.status(404).json({ message: "User data not found" });
+  }
+
+  res.json(userDataAdded[insta]);
 });
 
 // Endpoint to monitor total clicks
