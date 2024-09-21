@@ -22,10 +22,12 @@ data = {
     "img": image_url
 }
 
-response = requests.post(api_url, json=data)
+response = requests.post(api_url, json=image_url)
 
 if response.status_code == 200:
     print("프로필 이미지가 서버에 성공적으로 전송되었습니다.")
+    print(image_url)
+    print(response)
 else:
     print(f"서버 전송 실패: {response.status_code}, {response.text}")
 

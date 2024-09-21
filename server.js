@@ -62,18 +62,57 @@ app.post("/profile/img", (req, res) => {
     img,
   };
 
-  res.status(200).json({ message: "Profile image saved successfully" });
+  res.status(200).json({ message: "Profile image saved successfully", img });
 });
 
-// Retrieve user data by insta handle
-app.get("/api/profile/:insta", (req, res) => {
-  const { insta } = req.params;
+// Save the user profile image to the server using insta as the key
+app.post("/profile/img", async (req, res) => {
+  const { insta, img } = req.body;
 
-  if (!userProfile) {
-    return res.status(404).json({ message: "User data not found" });
+  if (!insta || !img) {
+    return res
+      .status(400)
+      .json({ message: "Insta handle and image URL are required" });
   }
 
-  res.json(userProfile[insta]);
+  try {
+    // 이미지 다운로드
+    const response = await axios({
+      url: img,
+      method: "GET",
+      responseType: "stream",
+    });
+
+    // 저장 경로 설정
+    const imgPath = path.join(__dirname, "uploads", `${insta}.jpg`);
+
+    // 이미지 파일 저장
+    response.data.pipe(fs.createWriteStream(imgPath));
+
+    // 저장된 이미지 경로를 프로필에 저장
+    userProfile[insta] = {
+      img: imgPath,
+    };
+
+    res
+      .status(200)
+      .json({ message: "Profile image saved successfully", imgPath });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to download or save the image" });
+  }
+});
+
+// 이미지 파일을 제공하는 API
+app.get("/profile/img/:insta", (req, res) => {
+  const { insta } = req.params;
+
+  if (!userProfile[insta] || !userProfile[insta].img) {
+    return res.status(404).json({ message: "Profile image not found" });
+  }
+
+  const imgPath = userProfile[insta].img;
+  res.sendFile(imgPath);
 });
 
 // Retrieve user data by insta handle
