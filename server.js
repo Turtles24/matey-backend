@@ -112,7 +112,7 @@ app.get("/profile/img/:insta", (req, res) => {
   }
 
   const imgPath = userProfile[insta].img;
-  res.sendFile(imgPath);
+  res.json(imgPath);
 });
 
 // Retrieve user data by insta handle
