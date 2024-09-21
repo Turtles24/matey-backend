@@ -34,20 +34,31 @@ app.post("/register", (req, res) => {
   res.status(200).json({ message: "Data saved successfully" });
 });
 
+// Save the user data to the server using insta as the key
 app.post("/register/data", (req, res) => {
-  const { mbti, birth, phone_num, bank_id, insta } = req.body;
+  const { insta } = req.body; // Add insta to retrieve the associated user
+  const {
+    mbti = null,
+    birth = null,
+    phone_num = null,
+    bank_id = null,
+  } = req.body; // Set default values to null if not provided
 
-  // Create an empty object to store non-null data
-  const userData = {};
+  if (!insta) {
+    return res.status(400).json({ message: "Insta handle is required" });
+  }
 
-  // Conditionally add properties if they are not null or undefined
-  if (mbti) userData.mbti = mbti;
-  if (birth) userData.birth = birth;
-  if (phone_num) userData.phone_num = phone_num;
-  if (bank_id) userData.bank_id = bank_id;
+  if (!userData[insta]) {
+    return res.status(404).json({ message: "User not found" });
+  }
 
   // Save the data associated with the insta handle
-  userDataAdded[insta] = userData;
+  userDataAdded[insta] = {
+    mbti,
+    birth,
+    phone_num,
+    bank_id,
+  };
 
   res.status(200).json({ message: "Data saved successfully" });
 });
