@@ -34,17 +34,20 @@ app.post("/register", (req, res) => {
   res.status(200).json({ message: "Data saved successfully" });
 });
 
-// Save the user data to the server using insta as the key
 app.post("/register/data", (req, res) => {
-  const { mbti, birth, phone_num, bank_id } = req.body;
+  const { mbti, birth, phone_num, bank_id, insta } = req.body;
+
+  // Create an empty object to store non-null data
+  const userData = {};
+
+  // Conditionally add properties if they are not null or undefined
+  if (mbti) userData.mbti = mbti;
+  if (birth) userData.birth = birth;
+  if (phone_num) userData.phone_num = phone_num;
+  if (bank_id) userData.bank_id = bank_id;
 
   // Save the data associated with the insta handle
-  userDataAdded[userData[insta]] = {
-    mbti,
-    birth,
-    phone_num,
-    bank_id,
-  };
+  userDataAdded[insta] = userData;
 
   res.status(200).json({ message: "Data saved successfully" });
 });
